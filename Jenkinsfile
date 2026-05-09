@@ -43,10 +43,15 @@ pipeline {
             }
         }
         stage('SonarQube Analysis') {
-            environment {
-                SCANNER_HOME = tool 'SonarScanner' // Must match tool name in Jenkins
+            tools {
+                sonar 'sonar-8'
             }
-    
+            steps {
+                script {
+                    sh "sonar-scanner "
+                }
+            }
+        }    
         stage('Build Image') {
             steps {
                 script {
