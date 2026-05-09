@@ -32,7 +32,7 @@ pipeline {
             }
         }
     stages {
-        stage('Build') {
+        stage('Install Dependencies') {
             steps {
                 script {
                     sh """
@@ -41,42 +41,15 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+    stage('Build Image') {
             steps {
                 script {
                     sh """
-                        echo "Testing"
-                         echo "Hello ${params.PERSON}"
-                         echo "Biography: ${params.BIOGRAPHY}"
-                         echo "Toggle: ${params.TOGGLE}"
-                         echo "Choice: ${params.DEPLOY}"
-                         echo "Password: ${params.PASSWORD}"
+                        docker build -t catalogue:${appVersion}
                     """
                 }
             }
         }
-        stage('Deploy') {
-            when {
-                expression { "${params.DEPLOY}" == "true"}
-            }
-            // input {
-            //     message "Should we continue?"
-            //     ok "Yes, we should."
-            //     submitter "alice,bob"
-            //     parameters {
-            //         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-            //     }
-            // }
-            steps {
-                script {
-                    sh """
-                        echo "Deploying"
-                        echo $COURSE
-                    """
-                }
-            }
-        }
-    }
 
     // post build
     post { 
