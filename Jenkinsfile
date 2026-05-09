@@ -31,6 +31,7 @@ pipeline {
                 }
             }
         }
+    }
     stages {
         stage('Install Dependencies') {
             steps {
@@ -41,6 +42,7 @@ pipeline {
                 }
             }
         }
+    }
     stage('Build Image') {
             steps {
                 script {
